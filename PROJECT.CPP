@@ -4,7 +4,7 @@
 int main()
 {
     cout<<"asd";
-    int board[15][15]; //Board 2D array
+    int board[10][10]; //Board 2D array
     int gd = DETECT, gm;
 
    initgraph(&gd, &gm, "C:/TC/BGI");
