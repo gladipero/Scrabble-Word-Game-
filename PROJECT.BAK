@@ -1,0 +1,39 @@
+#include<iostream.h>
+#include<conio.h>
+#include<graphics.h>
+int main()
+{
+    cout<<"asd";
+    int board[15][15]; //Board 2D array
+    int gd = DETECT, gm;
+
+   initgraph(&gd, &gm, "C:/TC/BGI");
+   //Horizontal lines
+   line(50, 100,406, 100);
+   line(50,135,406,135);
+   line(50,170,406,170);
+   line(50,205,406,205);
+   line(50,240,406,240);
+   line(50,275,406,275);
+   line(50,310,406,310);
+   line(50,345,406,345);
+   line(50,380,406,380);
+   line(50,415,406,415);
+   line(50,450,406,450);
+   //Vertical lines
+   line(50,100,50,450);
+   line(86,100,86,450);
+   line(122,100,122,450);
+   line(158,100,158,450);
+   line(194,100,194,450);
+   line(230,100,230,450);
+   line(266,100,266,450);
+   line(302,100,302,450);
+   line(338,100,338,450);
+   line(374,100,374,450);
+   line(406,100,406,450);
+   getch();
+   closegraph();
+   return 0;
+
+}
