@@ -4,7 +4,7 @@
 int main()
 {
     cout<<"asd";
-    int board[10][10]; //Board 2D array
+    int board[15][15]; //Board 2D array
     int gd = DETECT, gm;
 
    initgraph(&gd, &gm, "C:/TC/BGI");
@@ -33,7 +33,40 @@ int main()
    line(464,100,464,450);
    line(498,100,498,450);
    //Letters panel for player1 left side
-   line(-500,300,127,300);
+   //First five letters
+   line(0,270,127,270);
+   line(0,270,0,250);
+   line(25.5,270,25.5,250);
+   line(51,270,51,250);
+   line(76.5,270,76.5,250);
+   line(102,270,102,250);
+   line(127,270,127,250);
+   //second five letters
+   line(0,320,127,320);
+   line(0,320,0,300);
+   line(25.5,320,25.5,300);
+   line(51,320,51,300);
+   line(76.5,320,76.5,300);
+   line(102,320,102,300);
+   line(127,320,127,300);
+
+   //Player 2 right side
+   line(510,270,635,270);
+   line(510,270,510,250);
+   line(535,270,535,250);
+   line(560,270,560,250);
+   line(585,270,585,250);
+   line(610,270,610,250);
+   line(635,270,635,250);
+   //Remaining five letters
+   line(510,320,635,320);
+   line(510,320,510,300);
+   line(535,320,535,300);
+   line(560,320,560,300);
+   line(585,320,585,300);
+   line(610,320,610,300);
+   line(635,320,635,300);
+
 
    getch();
    closegraph();
