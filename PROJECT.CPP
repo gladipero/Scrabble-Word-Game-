@@ -1,12 +1,29 @@
 #include<iostream.h>
 #include<conio.h>
 #include<graphics.h>
-int main()
-{
-    cout<<"asd";
-    int board[15][15]; //Board 2D array
-    int gd = DETECT, gm;
+void fillplayers()
+ {
+   int i,j;
+   for(i=0;i<2;i++)
+    {
+      int y;
+      if(i==0)
+	y=260;
+	else
+	y=310;
+     for(j=0;j<5;j++)
+      {
+	outtextxy((13+j*26),y,"A");
+      }
+     }
+ }
 
+void boardgraph()
+{
+   int board[10][10];
+   clrscr();
+   int gd = DETECT, gm;
+   int i;
    initgraph(&gd, &gm, "C:/TC/BGI");
    //Horizontal lines
    line(144,100,498,100);
@@ -66,10 +83,27 @@ int main()
    line(585,320,585,300);
    line(610,320,610,300);
    line(635,320,635,300);
-
-
+   fillplayers();
    getch();
    closegraph();
-   return 0;
+  // return 0;
 
 }
+
+int main()
+{   clrscr();
+    int n;
+    cout<<"Scrabble Word Game:\n"<<"Press 1 For New game\n" << "Press 2 to exit\n";
+    int switchs;
+    cin>>switchs;
+    switch(switchs)
+    case 1:
+    {
+     {boardgraph();
+     break;}
+    case 2:
+    return 0;
+    }
+
+ }
+
