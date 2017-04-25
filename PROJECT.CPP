@@ -15,11 +15,11 @@ int m, n;
 
 char 	player1[10],
 		player2[10],
-		board[10][10];
+		board[15][15];
 
 void movecell(int x, int y)
 {
-	int c, flag=1;
+	int c, flag=1,counter1=0,counter2=0;
 	while(flag)
 	{
 		c = 0;
@@ -28,23 +28,39 @@ void movecell(int x, int y)
 		{
 			case KEY_UP:
 				//cout<<"Up";
-				floodfill(x, y, WHITE);
-				y=y-35;
+			if(counter1<7&&counter1 > -8)
+				{floodfill(x, y, WHITE);
+				y=y-24;
+				counter1++;
+			    }
 				break;
 			case KEY_DOWN:
 				//cout<<"Down";
-				floodfill(x, y, WHITE);
-				y=y+35;
-				break;
+			    if(counter1<8&&counter1 > -7)
+
+				 {floodfill(x, y, WHITE);
+				  y=y+24;
+				  counter1--;
+				}
+				  break;
 			case KEY_LEFT:
+
 				//cout<<"Left";
-				floodfill(x, y, WHITE);
-				x=x-36;
+				if(counter2<8&&counter2>-7)
+				{
+				 floodfill(x, y, WHITE);
+				 x=x-24;
+				 counter2--;
+				}
 				break;
 			case KEY_RIGHT:
 				//cout<<"Right";
-				floodfill(x, y, WHITE);
-				x=x+36;
+				if(counter2<7&&counter2>-8)
+				{
+				 floodfill(x, y, WHITE);
+				 x=x+24;
+				 counter2++;
+				 }
 				break;
 			case ENTER:
 				setfillstyle(SOLID_FILL, GREEN);
@@ -109,7 +125,7 @@ void fillplayer2()
 				player2[k]=ch;
 			}
 			ch=player2[k];
-			outtextxy((518 + j*25), y, &ch);
+			outtextxy((518+5 + j*25), y, &ch);
 		}
 
 	}
@@ -117,38 +133,49 @@ void fillplayer2()
 
 void boardgraph()
 {
-	int i, x=305, y=257;
+	int i, x=320, y=289;
 	clrscr();
 	int gd = DETECT, gm;
 	initgraph(&gd, &gm, "C:/TC/BGI");
 
 	setcolor(WHITE);
 	//Horizontal lines
-	line(143,100,499,100);
-	line(143,135,499,135);
-	line(143,170,499,170);
-	line(143,205,499,205);
-	line(143,240,499,240);
-	line(143,275,499,275);
-	line(143,310,499,310);
-	line(143,345,499,345);
-	line(143,380,499,380);
-	line(143,415,499,415);
-	line(143,450,499,450);
+	line(143,99,499+4,99);
+	line(143,123,499+4,123);
+	line(143,147,499+4,147);
+	line(143,171,499+4,171);
+	line(143,195,499+4,195);
+	line(143,219,499+4,219);
+	line(143,243,499+4,243);
+	line(143,267,499+4,267);
+	line(143,291,499+4,291);
+	line(143,315,499+4,315);
+	line(143,339,499+4,339);
+	line(143,363,503,363);
+	line(143,387,503,387);
+	line(143,411,503,411);
+	line(143,435,503,435);
+	line(143,459,503,459);
+
+
 
 	//Vertical lines
-	line(144,99,144,451);
-	line(180,99,180,451);
-	line(216,99,216,451);
-	line(252,99,252,451);
-	line(288,99,288,451);
-	line(324,99,324,451);
-	line(360,99,360,451);
-	line(396,99,396,451);
-	line(432,99,432,451);
-	line(464,99,464,451);
-	line(498,99,498,451);
-
+	line(143,99,143,459);
+	line(167,99,167,459);
+	line(191,99,191,459);
+	line(215,99,215,459);
+	line(239,99,239,459);
+	line(263,99,263,459);
+	line(287,99,287,459);
+	line(311,99,311,459);
+	line(335,99,335,459);
+	line(359,99,359,459);
+	line(383,99,383,459);
+	line(407,99,407,459);
+	line(431,99,431,459);
+	line(455,99,455,459);
+	line(479,99,479,459);
+	line(503,99,503,459);
 	//Player1 left panel
 	line(0,270,127,270);
 	line(0,270,0,250);
@@ -167,29 +194,29 @@ void boardgraph()
 	line(127,320,127,300);
 
 	//Player 2 right panel
-	line(510,270,635,270);
-	line(510,270,510,250);
-	line(535,270,535,250);
-	line(560,270,560,250);
-	line(585,270,585,250);
-	line(610,270,610,250);
-	line(635,270,635,250);
+	line(510+5,270,635+3,270);
+	line(510+5,270,510+5,250);
+	line(535+5,270,535+5,250);
+	line(560+5,270,560+5,250);
+	line(585+5,270,585+5,250);
+	line(610+5,270,610+5,250);
+	line(635+3,270,635+3,250);
 
-	line(510,320,635,320);
-	line(510,320,510,300);
-	line(535,320,535,300);
-	line(560,320,560,300);
-	line(585,320,585,300);
-	line(610,320,610,300);
-	line(635,320,635,300);
+	line(510+5,320,635+3,320);
+	line(510+5,320,510+5,300);
+	line(535+5,320,535+5,300);
+	line(560+5,320,560+5,300);
+	line(585+5,320,585+5,300);
+	line(610+5,320,610+5,300);
+	line(635+3,320,635+3,300);
 
 	setfillstyle(SOLID_FILL, BLUE);
 	floodfill(x,y,WHITE);
-	outtextxy(338,365,"_");
+       //	outtextxy(338,365,"_");
 
 	setcolor(RED);
 	settextstyle(4,HORIZ_DIR,9.9);
-	outtextxy(60, -15, "SCRABBLE");
+	outtextxy(90, -15, "SCRABBLE");
 
 	settextstyle(2, HORIZ_DIR, 8);
 	setcolor(GREEN);
