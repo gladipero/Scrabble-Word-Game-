@@ -1,109 +1,243 @@
-#include<iostream.h>
-#include<conio.h>
-#include<graphics.h>
-void fillplayers()
- {
-   int i,j;
-   for(i=0;i<2;i++)
-    {
-      int y;
-      if(i==0)
-	y=260;
-	else
-	y=310;
-     for(j=0;j<5;j++)
-      {
-	outtextxy((13+j*26),y,"A");
-      }
-     }
- }
+#include <iostream.h>
+#include <conio.h>
+#include <stdio.h>
+#include <graphics.h>
+#include <stdlib.h>
+
+#define KEY_UP 72
+#define KEY_DOWN 80
+#define KEY_LEFT 75
+#define KEY_RIGHT 77
+#define ESC 27
+#define ENTER 13
+
+int m, n;
+
+char 	player1[10],
+		player2[10],
+		board[15][15];
+
+void movecell(int x, int y)
+{
+	int c, flag=1;
+	while(flag)
+	{
+		c = 0;
+		setfillstyle(SOLID_FILL, BLACK);
+		switch((c=getch()))
+		{
+			case KEY_UP:
+				//cout<<"Up";
+				floodfill(x, y, WHITE);
+				y=y-24;
+				break;
+			case KEY_DOWN:
+				//cout<<"Down";
+				floodfill(x, y, WHITE);
+				y=y+24;
+				break;
+			case KEY_LEFT:
+				//cout<<"Left";
+				floodfill(x, y, WHITE);
+				x=x-24;
+				break;
+			case KEY_RIGHT:
+				//cout<<"Right";
+				floodfill(x, y, WHITE);
+				x=x+24;
+				break;
+			case ENTER:
+				setfillstyle(SOLID_FILL, GREEN);
+				//cout<<"ENTER";
+				flag=0;
+				break;
+			case ESC:
+				flag=0;
+				break;
+		}
+		if(flag)
+			setfillstyle(SOLID_FILL, BLUE);
+		floodfill(x, y, WHITE);
+
+}
+}
+
+void fillplayer1()
+{
+	int i, j, k;
+	srand(time(NULL));
+	char ch;
+	int y;
+	for(i=0, k=0; i<2; i++)
+	{
+		if(i==0)
+			y=245;
+		else
+			y=295;
+
+		for(j=0; j<5; j++, k++)
+		{
+			if(player1[k]==NULL)
+			{
+				ch=65+random(26);
+				player1[k]=ch;
+			}
+			ch=player1[k];
+			outtextxy((9 + j*25), y, &ch);
+		}
+	}
+}
+
+void fillplayer2()
+{
+	int i,j,k;
+	char ch;
+	k=0;
+	for(i=0, k=0; i<2; i++)
+	{
+		int y;
+		if(i==0)
+			y=245;
+		else
+			y=295;
+
+		for(j=0; j<5; j++, k++)
+		{
+			if(player2[k]==NULL)
+			{
+				ch=65+random(26);
+				player2[k]=ch;
+			}
+			ch=player2[k];
+			outtextxy((518+5 + j*25), y, &ch);
+		}
+
+	}
+}
 
 void boardgraph()
 {
-   int board[10][10];
-   clrscr();
-   int gd = DETECT, gm;
-   int i;
-   initgraph(&gd, &gm, "C:/TC/BGI");
-   //Horizontal lines
-   line(144,100,498,100);
-   line(144,135,498,135);
-   line(144,170,498,170);
-   line(144,205,498,205);
-   line(144,240,498,240);
-   line(144,275,498,275);
-   line(144,310,498,310);
-   line(144,345,498,345);
-   line(144,380,498,380);
-   line(144,415,498,415);
-   line(144,450,498,450);
-   //Vertical lines
-   line(144,100,144,450);
-   line(180,100,180,450);
-   line(216,100,216,450);
-   line(252,100,252,450);
-   line(288,100,288,450);
-   line(324,100,324,450);
-   line(360,100,360,450);
-   line(396,100,396,450);
-   line(432,100,432,450);
-   line(464,100,464,450);
-   line(498,100,498,450);
-   //Letters panel for player1 left side
-   //First five letters
-   line(0,270,127,270);
-   line(0,270,0,250);
-   line(25.5,270,25.5,250);
-   line(51,270,51,250);
-   line(76.5,270,76.5,250);
-   line(102,270,102,250);
-   line(127,270,127,250);
-   //second five letters
-   line(0,320,127,320);
-   line(0,320,0,300);
-   line(25.5,320,25.5,300);
-   line(51,320,51,300);
-   line(76.5,320,76.5,300);
-   line(102,320,102,300);
-   line(127,320,127,300);
+	int i, x=320, y=289;
+	clrscr();
+	int gd = DETECT, gm;
+	initgraph(&gd, &gm, "C:/TC/BGI");
 
-   //Player 2 right side
-   line(510,270,635,270);
-   line(510,270,510,250);
-   line(535,270,535,250);
-   line(560,270,560,250);
-   line(585,270,585,250);
-   line(610,270,610,250);
-   line(635,270,635,250);
-   //Remaining five letters
-   line(510,320,635,320);
-   line(510,320,510,300);
-   line(535,320,535,300);
-   line(560,320,560,300);
-   line(585,320,585,300);
-   line(610,320,610,300);
-   line(635,320,635,300);
-   fillplayers();
-   getch();
-   closegraph();
-  // return 0;
+	setcolor(WHITE);
+	//Horizontal lines
+	line(143,99,499+4,99);
+	line(143,123,499+4,123);
+	line(143,147,499+4,147);
+	line(143,171,499+4,171);
+	line(143,195,499+4,195);
+	line(143,219,499+4,219);
+	line(143,243,499+4,243);
+	line(143,267,499+4,267);
+	line(143,291,499+4,291);
+	line(143,315,499+4,315);
+	line(143,339,499+4,339);
+	line(143,363,503,363);
+	line(143,387,503,387);
+	line(143,411,503,411);
+	line(143,435,503,435);
+	line(143,459,503,459);
 
+
+
+	//Vertical lines
+	line(143,99,143,459);
+	line(167,99,167,459);
+	line(191,99,191,459);
+	line(215,99,215,459);
+	line(239,99,239,459);
+	line(263,99,263,459);
+	line(287,99,287,459);
+	line(311,99,311,459);
+	line(335,99,335,459);
+	line(359,99,359,459);
+	line(383,99,383,459);
+	line(407,99,407,459);
+	line(431,99,431,459);
+	line(455,99,455,459);
+	line(479,99,479,459);
+	line(503,99,503,459);
+	//Player1 left panel
+	line(0,270,127,270);
+	line(0,270,0,250);
+	line(25.5,270,25.5,250);
+	line(51,270,51,250);
+	line(76.5,270,76.5,250);
+	line(102,270,102,250);
+	line(127,270,127,250);
+
+	line(0,320,127,320);
+	line(0,320,0,300);
+	line(25.5,320,25.5,300);
+	line(51,320,51,300);
+	line(76.5,320,76.5,300);
+	line(102,320,102,300);
+	line(127,320,127,300);
+
+	//Player 2 right panel
+	line(510+5,270,635+3,270);
+	line(510+5,270,510+5,250);
+	line(535+5,270,535+5,250);
+	line(560+5,270,560+5,250);
+	line(585+5,270,585+5,250);
+	line(610+5,270,610+5,250);
+	line(635+3,270,635+3,250);
+
+	line(510+5,320,635+3,320);
+	line(510+5,320,510+5,300);
+	line(535+5,320,535+5,300);
+	line(560+5,320,560+5,300);
+	line(585+5,320,585+5,300);
+	line(610+5,320,610+5,300);
+	line(635+3,320,635+3,300);
+
+	setfillstyle(SOLID_FILL, BLUE);
+	floodfill(x,y,WHITE);
+       //	outtextxy(338,365,"_");
+
+	setcolor(RED);
+	settextstyle(4,HORIZ_DIR,9.9);
+	outtextxy(90, -15, "SCRABBLE");
+
+	settextstyle(2, HORIZ_DIR, 8);
+	setcolor(GREEN);
+	fillplayer1();
+	setcolor(YELLOW);
+	fillplayer2();
+
+	movecell(x, y);
 }
 
 int main()
-{   clrscr();
-    int n;
-    cout<<"Scrabble Word Game:\n"<<"Press 1 For New game\n" << "Press 2 to exit\n";
-    int switchs;
-    cin>>switchs;
-    switch(switchs)
-    case 1:
-    {
-     {boardgraph();
-     break;}
-    case 2:
-    return 0;
-    }
+{
+	clrscr();
+	int n;
 
- }
+	cout<<"Scrabble Word Game:\n"
+		<<"Press 1 For New game\n"
+		<<"Press 2 to exit\n";
 
+	int switchs,k;
+	cin>>switchs;
+
+	switch(switchs)
+	{
+		case 1:
+			for(k=0; k<10; k++)
+			{
+				player1[k]=NULL;
+				player2[k]=NULL;
+			}
+			boardgraph();
+			break;
+
+		case 2:
+			return (0);
+	}
+	getch();
+	closegraph();
+	return(0);
+}
