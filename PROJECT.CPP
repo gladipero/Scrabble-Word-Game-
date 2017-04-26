@@ -61,6 +61,15 @@ void movecell(int x, int y)
 					ctr2--;
 				}
 				break;
+				case KEY_RIGHT:
+				//cout<<"Right";
+				if(ctr2 < 14 && ctr2 > -1)
+				{
+					floodfill(x, y, WHITE);
+					x=x+24;
+					ctr2++;
+				}
+				break;
 
 			case SPACE:
 				//cout<<"SPACE";
