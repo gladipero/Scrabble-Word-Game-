@@ -21,7 +21,7 @@ char 	player1[10],
 
 void movecell(int x, int y)
 {
-	int c, flag=2, ctr1=0, ctr2=0;
+	int c, flag=1, ctr1=0, ctr2=0;
 	while(flag==1)
 	{
 		c = 0;
@@ -78,7 +78,7 @@ void movecell(int x, int y)
 				break;
 
 			case ESC:
-				cout<<"ESCAPE";
+				//cout<<"ESCAPE";
 				flag=0;
 				break;
 		}
@@ -88,14 +88,14 @@ void movecell(int x, int y)
 		floodfill(x, y, WHITE);
 
 
-	  /*	if(flag==2)
+	  if(flag==2)
 		{
 			alpha=getch();
 			board[ctr1][ctr2]=alpha;
 			settextstyle(6, HORIZ_DIR, 3);
 			outtextxy(x-1, y-30, &alpha);
 			flag=1;
-		}*/
+		}
 	}
 }
 
