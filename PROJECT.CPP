@@ -21,7 +21,7 @@ char 	player1[10],
 
 void movecell(int x, int y)
 {
-	int c, flag=1, ctr1=0, ctr2=0;
+	int c, flag=1, ctr1=7, ctr2=7;
 	while(flag==1)
 	{
 		c = 0;
@@ -32,42 +32,33 @@ void movecell(int x, int y)
 
 			case KEY_UP:
 				//cout<<"Up";
-				if(ctr1 < 7 && ctr1 > -8)
+				if(ctr1 < 16 && ctr1 > 0)
 				{
 					floodfill(x, y, WHITE);
 					y=y-24;
-					ctr1++;
+					ctr1--;
 				}
 				break;
 
 			case KEY_DOWN:
 				//cout<<"Down";
-				if(ctr1 < 8 && ctr1 > -7)
+
+				if(ctr1 < 14 && ctr1 > -1)
 				 {
 					floodfill(x, y, WHITE);
 					y=y+24;
-					ctr1--;
+					ctr1++;
 				 }
 				 break;
 
 			case KEY_LEFT:
 
 				//cout<<"Left";
-				if(ctr2 < 8 && ctr2 > -7)
+				if(ctr2 < 15 && ctr2 > 0)
 				{
 					floodfill(x, y, WHITE);
 					x=x-24;
 					ctr2--;
-				}
-				break;
-
-			case KEY_RIGHT:
-				//cout<<"Right";
-				if(ctr2 < 7 && ctr2 > -8)
-				{
-					floodfill(x, y, WHITE);
-					x=x+24;
-					ctr2++;
 				}
 				break;
 
