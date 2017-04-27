@@ -4,78 +4,212 @@
 #include <graphics.h>
 #include <stdlib.h>
 
-#define KEY_UP 72
-#define KEY_DOWN 80
-#define KEY_LEFT 75
-#define KEY_RIGHT 77
+#define UP 72
+#define DOWN 80
+#define LEFT 75
+#define RIGHT 77
 #define ESC 27
+#define SPACE 32
 #define ENTER 13
 
-int m, n;
+int team=1, tempctr1=0, tempctr2=0;
+
+
+struct temp
+{
+	char alpha;
+	int x;
+	int y;
+}
+temp1[10], temp2[10];
 
 char 	player1[10],
 		player2[10],
+		alpha,
 		board[15][15];
+
+int indictionary()
+{
+	return(1);
+}
+
+int verifystr(int i, int j)
+{
+	int k=0;
+	char str[15]="";
+	char c;
+	cout<<"Direction: ";
+	switch((c=getch()))
+	{
+
+		case 'v':
+			//cout<<"down";
+			while( board[i-1][j] && i>0)
+				i--;
+
+			while(board[i][j] && i<15)
+			{
+
+				str[k]=board[i][j];
+				k++;
+				i++;
+			}
+			break;
+
+		case 'h':
+
+			while( board[i][j-1] && j>0)
+				j--;
+
+			while(board[i][j] && j<15)
+			{
+				str[k]=board[i][j];
+				k++;
+				j++;
+			}
+			break;
+
+		default:
+			break;
+
+	}
+	cout<<str;
+
+	if (indictionary())
+		return(1);
+	else
+		return(0);
+}
+
+int verifyalpha()
+{
+	int i;
+
+	if(team==1)
+	{
+		for(i=0; i<10; i++)
+			if(int(player1[i])+32 == int(alpha))
+			{
+				player1[i]=NULL;
+				temp1[tempctr1++].alpha=alpha;
+				return 1;
+			}
+	}
+
+	else
+	{
+		for(i=0; i<10; i++)
+			if(int(player2[i])+32 == int(alpha))
+			{
+				player2[i]=NULL;
+				temp2[tempctr2++].alpha=alpha;
+				return 1;
+			}
+	}
+	return 0;
+}
 
 void movecell(int x, int y)
 {
-	int c, flag=1,counter1=0,counter2=0;
-	while(flag)
+	int c, flag=1, ctr1=7, ctr2=7;
+	while(flag==1)
 	{
 		c = 0;
 		setfillstyle(SOLID_FILL, BLACK);
+
 		switch((c=getch()))
 		{
-			case KEY_UP:
+
+			case UP:
 				//cout<<"Up";
-			if(counter1<7&&counter1 > -8)
-				{floodfill(x, y, WHITE);
-				y=y-24;
-				counter1++;
-			    }
+				if(ctr1 < 16 && ctr1 > 0)
+				{
+					floodfill(x, y, WHITE);
+					alpha=board[ctr1][ctr2];
+					outtextxy(x-3, y-30, &alpha);
+					y=y-24;
+					ctr1--;
+				}
 				break;
-			case KEY_DOWN:
+
+			case DOWN:
 				//cout<<"Down";
-			    if(counter1<8&&counter1 > -7)
-
-				 {floodfill(x, y, WHITE);
-				  y=y+24;
-				  counter1--;
+				if(ctr1 < 14 && ctr1 > -1)
+				{
+					floodfill(x, y, WHITE);
+					alpha=board[ctr1][ctr2];
+					outtextxy(x-3, y-30, &alpha);
+					y=y+24;
+					ctr1++;
 				}
-				  break;
-			case KEY_LEFT:
+				break;
 
+			case LEFT:
 				//cout<<"Left";
-				if(counter2<8&&counter2>-7)
+				if(ctr2 < 15 && ctr2 > 0)
 				{
-				 floodfill(x, y, WHITE);
-				 x=x-24;
-				 counter2--;
+					floodfill(x, y, WHITE);
+					alpha=board[ctr1][ctr2];
+					outtextxy(x-3, y-30, &alpha);
+					x=x-24;
+					ctr2--;
 				}
 				break;
-			case KEY_RIGHT:
+
+			case RIGHT:
 				//cout<<"Right";
-				if(counter2<7&&counter2>-8)
+				if(ctr2 < 14 && ctr2 > -1)
 				{
-				 floodfill(x, y, WHITE);
-				 x=x+24;
-				 counter2++;
-				 }
+					floodfill(x, y, WHITE);
+					alpha=board[ctr1][ctr2];
+					outtextxy(x-3, y-30, &alpha);
+					x=x+24;
+					ctr2++;
+				}
 				break;
+
+			case SPACE:
+				//cout<<"SPACE";
+				if(board[ctr1][ctr2])
+				{
+					cout<<board[ctr1][ctr2];
+					flag=1;
+					break;
+				}
+				setfillstyle(SOLID_FILL, RED);
+				flag=2;
+				break;
+
 			case ENTER:
-				setfillstyle(SOLID_FILL, GREEN);
 				//cout<<"ENTER";
-				flag=0;
+				verifystr(ctr1, ctr2);
+				team= (team==1) ? 2:1;
 				break;
+
 			case ESC:
+				//cout<<"ESCAPE";
 				flag=0;
 				break;
 		}
-		if(flag)
-			setfillstyle(SOLID_FILL, BLUE);
+
+		if(flag==1)
+			setfillstyle(INTERLEAVE_FILL, RED);
+
 		floodfill(x, y, WHITE);
 
-}
+
+		if(flag==2)
+		{
+			alpha=getch();
+			settextstyle(6, HORIZ_DIR, 3);
+			outtextxy(x-3, y-30, &alpha);
+			flag=1;
+			if(verifyalpha())
+				board[ctr1][ctr2]=alpha;
+			else
+				cout<<"N/A in team"<<team;
+		}
+	}
 }
 
 void fillplayer1()
@@ -125,112 +259,125 @@ void fillplayer2()
 				player2[k]=ch;
 			}
 			ch=player2[k];
-			outtextxy((518+5 + j*25), y, &ch);
+			outtextxy((523 + j*25), y, &ch);
 		}
-
 	}
 }
 
 void boardgraph()
 {
-	int i, x=320, y=289;
+	int i, x=320, y=289, x1, y1, x2, y2;
 	clrscr();
+
 	int gd = DETECT, gm;
 	initgraph(&gd, &gm, "C:/TC/BGI");
-
 	setcolor(WHITE);
+
 	//Horizontal lines
-	line(143,99,499+4,99);
-	line(143,123,499+4,123);
-	line(143,147,499+4,147);
-	line(143,171,499+4,171);
-	line(143,195,499+4,195);
-	line(143,219,499+4,219);
-	line(143,243,499+4,243);
-	line(143,267,499+4,267);
-	line(143,291,499+4,291);
-	line(143,315,499+4,315);
-	line(143,339,499+4,339);
-	line(143,363,503,363);
-	line(143,387,503,387);
-	line(143,411,503,411);
-	line(143,435,503,435);
-	line(143,459,503,459);
+	for(i=0, x1=143, x2=503, y1=99, y2=99;
+		i<16;
+		i++, y1+=24, y2+=24)
 
+		line(x1, y1, x2, y2);
 
+  /*line(143, 99 , 503, 99);
+	line(143, 123, 503, 123);
+	line(143, 147, 503, 147);
+	line(143, 171, 503, 171);
+	line(143, 195, 503, 195);
+	line(143, 219, 503, 219);
+	line(143, 243, 503, 243);
+	line(143, 267, 503, 267);
+	line(143, 291, 503, 291);
+	line(143, 315, 503, 315);
+	line(143, 339, 503, 339);
+	line(143, 363, 503, 363);
+	line(143, 387, 503, 387);
+	line(143, 411, 503, 411);
+	line(143, 435, 503, 435);
+	line(143, 459, 503, 459);
+  */
 
 	//Vertical lines
-	line(143,99,143,459);
-	line(167,99,167,459);
-	line(191,99,191,459);
-	line(215,99,215,459);
-	line(239,99,239,459);
-	line(263,99,263,459);
-	line(287,99,287,459);
-	line(311,99,311,459);
-	line(335,99,335,459);
-	line(359,99,359,459);
-	line(383,99,383,459);
-	line(407,99,407,459);
-	line(431,99,431,459);
-	line(455,99,455,459);
-	line(479,99,479,459);
-	line(503,99,503,459);
-	//Player1 left panel
-	line(0,270,127,270);
-	line(0,270,0,250);
-	line(25.5,270,25.5,250);
-	line(51,270,51,250);
-	line(76.5,270,76.5,250);
-	line(102,270,102,250);
-	line(127,270,127,250);
+	for(i=0, x1=143, x2=143, y1=99, y2=459;
+		i<16;
+		i++, x1+=24, x2+=24)
 
-	line(0,320,127,320);
-	line(0,320,0,300);
-	line(25.5,320,25.5,300);
-	line(51,320,51,300);
-	line(76.5,320,76.5,300);
-	line(102,320,102,300);
-	line(127,320,127,300);
+		line(x1, y1, x2, y2);
+
+  /*line(143, 99, 143, 459);
+	line(167, 99, 167, 459);
+	line(191, 99, 191, 459);
+	line(215, 99, 215, 459);
+	line(239, 99, 239, 459);
+	line(263, 99, 263, 459);
+	line(287, 99, 287, 459);
+	line(311, 99, 311, 459);
+	line(335, 99, 335, 459);
+	line(359, 99, 359, 459);
+	line(383, 99, 383, 459);
+	line(407, 99, 407, 459);
+	line(431, 99, 431, 459);
+	line(455, 99, 455, 459);
+	line(479, 99, 479, 459);
+	line(503, 99, 503, 459);
+  */
+
+	//Player1 left panel
+	line(0   , 270, 127 , 270);
+	line(0   , 270, 0   , 250);
+	line(25.5, 270, 25.5, 250);
+	line(51  , 270, 51  , 250);
+	line(76.5, 270, 76.5, 250);
+	line(102 , 270, 102 , 250);
+	line(127 , 270, 127 , 250);
+
+	line(0   , 320, 127 , 320);
+	line(0   , 320, 0   , 300);
+	line(25.5, 320, 25.5, 300);
+	line(51  , 320, 51  , 300);
+	line(76.5, 320, 76.5, 300);
+	line(102 , 320, 102 , 300);
+	line(127 , 320, 127 , 300);
 
 	//Player 2 right panel
-	line(510+5,270,635+3,270);
-	line(510+5,270,510+5,250);
-	line(535+5,270,535+5,250);
-	line(560+5,270,560+5,250);
-	line(585+5,270,585+5,250);
-	line(610+5,270,610+5,250);
-	line(635+3,270,635+3,250);
+	line(515, 270, 638, 270);
+	line(515, 270, 515, 250);
+	line(540, 270, 540, 250);
+	line(565, 270, 565, 250);
+	line(590, 270, 590, 250);
+	line(615, 270, 615, 250);
+	line(638, 270, 638, 250);
 
-	line(510+5,320,635+3,320);
-	line(510+5,320,510+5,300);
-	line(535+5,320,535+5,300);
-	line(560+5,320,560+5,300);
-	line(585+5,320,585+5,300);
-	line(610+5,320,610+5,300);
-	line(635+3,320,635+3,300);
+	line(515, 320, 638, 320);
+	line(515, 320, 515, 300);
+	line(540, 320, 540, 300);
+	line(565, 320, 565, 300);
+	line(590, 320, 590, 300);
+	line(615, 320, 615, 300);
+	line(638, 320, 638, 300);
 
-	setfillstyle(SOLID_FILL, BLUE);
+	setfillstyle(INTERLEAVE_FILL, RED);
 	floodfill(x,y,WHITE);
-       //	outtextxy(338,365,"_");
 
 	setcolor(RED);
 	settextstyle(4,HORIZ_DIR,9.9);
-	outtextxy(90, -15, "SCRABBLE");
+	outtextxy(63, -15, "SCRABBLE");
 
 	settextstyle(2, HORIZ_DIR, 8);
 	setcolor(GREEN);
 	fillplayer1();
-	setcolor(YELLOW);
+	setcolor(CYAN);
 	fillplayer2();
 
+	setcolor(YELLOW);
 	movecell(x, y);
 }
 
 int main()
 {
 	clrscr();
-	int n;
+	int i, j, n;
 
 	cout<<"Scrabble Word Game:\n"
 		<<"Press 1 For New game\n"
@@ -242,11 +389,18 @@ int main()
 	switch(switchs)
 	{
 		case 1:
+
 			for(k=0; k<10; k++)
 			{
 				player1[k]=NULL;
 				player2[k]=NULL;
 			}
+
+			for(i=0; i<15; i++)
+				for(j=0; j<15; j++)
+					board[i][j]=NULL;
+			//board[7][8]='a';
+
 			boardgraph();
 			break;
 
