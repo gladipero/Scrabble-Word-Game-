@@ -12,20 +12,41 @@
 #define SPACE 32
 #define ENTER 13
 
-int m, n;
+
+int alphactr,team=1;
+
 
 char 	player1[10],
 		player2[10],
 		alpha,
 		board[15][15];
 
+int verifyalpha()
+	{  int i;
+	   if(team==1)
+			for(i=0;i<10;i++)
+			 {
+				 if(int(player1[i])+32==int(alpha))
+				   {
+					player1[i]=NULL;
+					return 1;}
+			}
+
+	else {
+		   for(i=0;i<10;i++)
+			  if(int(player2[i])+32==int(alpha))
+			  { player2[i]=NULL;
+				return 1;}
+				}
+	 return 0;
+	 }
 void movecell(int x, int y)
 {
 	int c, flag=1, ctr1=7, ctr2=7;
 	while(flag==1)
 	{
 		c = 0;
-		setfillstyle(SOLID_FILL, BLACK);
+		setfillstyle(EMPTY_FILL, BLACK);
 
 		switch((c=getch()))
 		{
@@ -71,8 +92,16 @@ void movecell(int x, int y)
 				}
 				break;
 
+
 			case SPACE:
 				//cout<<"SPACE";
+
+				if(board[ctr1][ctr2])
+				{
+					cout<<board[ctr1][ctr2];
+					flag=1;
+					break;
+				}
 				setfillstyle(SOLID_FILL, GREEN);
 				flag=2;
 				break;
@@ -84,17 +113,21 @@ void movecell(int x, int y)
 		}
 
 		if(flag==1)
-			setfillstyle(SOLID_FILL, BLUE);
+			setfillstyle(CLOSE_DOT_FILL, BLUE);
 		floodfill(x, y, WHITE);
 
 
 	  if(flag==2)
 		{
 			alpha=getch();
-			board[ctr1][ctr2]=alpha;
 			settextstyle(6, HORIZ_DIR, 3);
 			outtextxy(x-1, y-30, &alpha);
 			flag=1;
+			if(verifyalpha())
+			{
+
+				board[ctr1][ctr2]=alpha;
+			}
 		}
 	}
 }
@@ -257,6 +290,7 @@ void boardgraph()
 	fillplayer1();
 	setcolor(YELLOW);
 	fillplayer2();
+	//outtextxy(x,y,"h");
 
 	movecell(x, y);
 }
@@ -264,7 +298,7 @@ void boardgraph()
 int main()
 {
 	clrscr();
-	int n;
+	int i, j, n;
 
 	cout<<"Scrabble Word Game:\n"
 		<<"Press 1 For New game\n"
@@ -276,11 +310,18 @@ int main()
 	switch(switchs)
 	{
 		case 1:
+
 			for(k=0; k<10; k++)
 			{
 				player1[k]=NULL;
 				player2[k]=NULL;
 			}
+
+			for(i=0; i<15; i++)
+				for(j=0; j<15; j++)
+					board[i][j]=NULL;
+			board[7][8]='a';
+
 			boardgraph();
 			break;
 
@@ -291,5 +332,3 @@ int main()
 	closegraph();
 	return(0);
 }
-
-
