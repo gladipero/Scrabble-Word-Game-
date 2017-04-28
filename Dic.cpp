@@ -203,39 +203,15 @@ int main()
     char mod;
     int mode;
 
-    //cout<<"Dictionary Loaded!"<<endl;
-
     loadDictionary(trie,"wordlist.txt");
 
-    /*while(1)
-    {
-
-        cout<<endl<<endl;
-        cout<<"Interactive mode,press "<<endl;
-        cout<<"1: Check word in dictionary"<<endl;
-        cout<<"2: Quit"<<endl<<endl;
-
-
-        cin>>mode;
-
-
-        switch(mode)
-        {
-
-        case 1://Auto complete
-        {*/
+   
             string s;
-           // cout<<"Enter initials letters for word completion:"<<endl;
-            //cin>>s;
             ifstream f;
             f.open("temp.txt");
-            //f<<"amar";
-            //f.seekg(0, ios::beg);
             f>>s;
             f.close();
-            transform(s.begin(), s.end(), s.begin(), ::tolower);//Applies an operation sequentially to the elements of one (1) or two (2) ranges
-                                                                //and stores the result in the range that begins at result.
-
+            transform(s.begin(), s.end(), s.begin(), ::tolower);
 
 
             vector<string> autoCompleteList;
@@ -250,33 +226,14 @@ int main()
             }
             else
             {
-                //cout<<"Word exists "<<endl;
-                /*for(int i=0; i<autoCompleteList.size(); i++)
-                {
-                    cout<<"\t\t\t"<<autoCompleteList[i]<<endl;
-                }
-                cout<<"Thank you for using auto complete \n Developed by \n Amar Shishodia \n Aparna Varma \n Aditya Kushwaha \nPress any key to continue...";
-                *///getch();
+               
                 g.open("temp.txt",ios::out);
                 g<<1;
                 //system("clear");
             }
             f.close();
-      //  }
-      //  continue;
 
- //       case 2:
-            delete trie;
-   //         return 0;
-
-//        default:
-  //          cout<<"Sorry, wrong choice.\nPress aby key to continue.";
-    //        getch();
-//            continue;
-
-
-//        }
-
+            delete trie;      
 
     }
 
