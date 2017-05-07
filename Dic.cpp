@@ -205,10 +205,10 @@ int main()
 
     loadDictionary(trie,"wordlist.txt");
 
-   
+
             string s;
             ifstream f;
-            f.open("temp.txt");
+            f.open("C:\\TURBOC3\\BIN\\TEMP.txt");
             f>>s;
             f.close();
             transform(s.begin(), s.end(), s.begin(), ::tolower);
@@ -220,20 +220,19 @@ int main()
             if(autoCompleteList.size()==0)
             {
                 //cout<<"Word not in dictionary"<<endl;
-                g.open("temp.txt",ios::out);
+                g.open("C:\\TURBOC3\\BIN\\TEMP.txt",ios::out);
                 g<<0;
 
             }
             else
             {
-               
-                g.open("temp.txt",ios::out);
+
+                g.open("C:\\TURBOC3\\BIN\\TEMP.txt",ios::out);
                 g<<1;
                 //system("clear");
             }
             f.close();
 
-            delete trie;      
+            delete trie;
 
     }
-
