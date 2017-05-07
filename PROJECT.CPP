@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <graphics.h>
 #include <stdlib.h>
+#include <fstream.h>
 
 #define UP 72
 #define DOWN 80
@@ -13,7 +14,6 @@
 #define ENTER 13
 
 int team=1, tempctr1=0, tempctr2=0;
-
 
 struct temp
 {
@@ -28,9 +28,19 @@ char 	player1[10],
 		alpha,
 		board[15][15];
 
-int indictionary()
+int indictionary(char *str)
 {
-	return(1);
+	int flag=0;
+	ofstream f;
+	ifstream g;
+	f.open("temp.txt", ios::trunc);
+	f<<str;
+	f.close();
+	getch();
+	g.open("temp.txt");
+	g>>flag;
+	g.close();
+	return(flag);
 }
 
 int verifystr(int i, int j)
@@ -43,7 +53,6 @@ int verifystr(int i, int j)
 	{
 
 		case 'v':
-			//cout<<"down";
 			while( board[i-1][j] && i>0)
 				i--;
 
@@ -73,12 +82,9 @@ int verifystr(int i, int j)
 			break;
 
 	}
-	cout<<str;
 
-	if (indictionary())
-		return(1);
-	else
-		return(0);
+	return(indictionary(str));
+
 }
 
 int verifyalpha()
@@ -182,8 +188,13 @@ void movecell(int x, int y)
 
 			case ENTER:
 				//cout<<"ENTER";
-				verifystr(ctr1, ctr2);
-				team= (team==1) ? 2:1;
+				if(verifystr(ctr1, ctr2))
+				{
+					cout<<"Word exists";
+					team= (team==1) ? 2:1;
+				}
+				else
+					cout<<"No word";
 				break;
 
 			case ESC:
